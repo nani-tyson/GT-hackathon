@@ -352,6 +352,68 @@ problem-1/
 └── README.md
 ```
 
+
+## ⚠️ If the UI doesn’t work — test via FastAPI `/docs`
+
+If the web UI is having issues (page refreshes, file dialog problems, etc.) you can fully test the backend using FastAPI's interactive docs instead of the frontend.
+
+**Open:** `http://localhost:8000/docs`
+
+Use the UI to run these endpoints:
+
+* `POST /upload` — multipart file upload. Returns `{ status, upload_id }`.
+* `POST /generate-report` — trigger pipeline. Query params: `upload_id`, `report_format` (`pdf|pptx`), `report_title`. Returns `{ report_id }`.
+* `GET /status/{report_id}` — check pipeline status (`ingesting`, `transforming`, `computing_kpis`, `generating_charts`, `generating_insights`, `generating_report`, `completed`, `error`).
+* `GET /download/{report_id}` — download final file.
+* `GET /reports` — list recent reports and metadata.
+
+### Quick curl examples (copy-paste)
+
+Upload files (multipart):
+
+```bash
+curl -v -F "files=@/path/to/sample.csv" http://localhost:8000/upload
+```
+
+Trigger generation:
+
+```bash
+curl -X POST "http://localhost:8000/generate-report?upload_id=YOUR_UPLOAD_ID&report_format=pdf&report_title=TestReport"
+```
+
+Poll status:
+
+```bash
+curl http://localhost:8000/status/YOUR_REPORT_ID
+```
+
+Download:
+
+```bash
+curl -o report.pdf http://localhost:8000/download/YOUR_REPORT_ID
+```
+
+### Debug tips
+
+* If `/upload` returns success but UI still reloads, try the curl upload above to confirm backend is fine.
+* Check backend logs (console) for errors from the Inngest workflow.
+* Ensure CORS is enabled in FastAPI if frontend is served from a different origin:
+
+```py
+from fastapi.middleware.cors import CORSMiddleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000","http://127.0.0.1:5500","http://localhost:8000"], # add your origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
+
+---
+
+Paste the above block into your README under “How to Run / Test” — it’s minimal, actionable, and lets judges/testers validate the full pipeline even if the UI is flaky. Want me to auto-append this into the README file (and produce the updated file)?
+
 ---
 
 ## 🏆 Why This Solution Stands Out
