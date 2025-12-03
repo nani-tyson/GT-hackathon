@@ -1,0 +1,58 @@
+date,campaign_id,campaign_name,region,category,impressions,clicks,conversions,spend,revenue,foot_traffic,weather_temp,weather_condition
+2024-01-01,C001,Winter Sale,Northeast,Retail,125000,3750,187,1875.00,4675.00,1250,32,Snowy
+2024-01-01,C002,New Year Promo,Southeast,Food & Beverage,98000,2940,147,1470.00,3675.00,980,65,Sunny
+2024-01-01,C003,Holiday Clearance,Midwest,Retail,87000,2610,130,1305.00,3262.50,870,28,Cloudy
+2024-01-01,C004,Tech Deals,West,Electronics,156000,4680,234,2340.00,5850.00,1560,55,Sunny
+2024-01-02,C001,Winter Sale,Northeast,Retail,132000,3960,198,1980.00,4950.00,1320,30,Snowy
+2024-01-02,C002,New Year Promo,Southeast,Food & Beverage,105000,3150,157,1575.00,3937.50,1050,68,Sunny
+2024-01-02,C003,Holiday Clearance,Midwest,Retail,91000,2730,136,1365.00,3412.50,910,25,Cloudy
+2024-01-02,C004,Tech Deals,West,Electronics,168000,5040,252,2520.00,6300.00,1680,58,Sunny
+2024-01-03,C001,Winter Sale,Northeast,Retail,118000,3540,177,1770.00,4425.00,1180,35,Rainy
+2024-01-03,C002,New Year Promo,Southeast,Food & Beverage,112000,3360,168,1680.00,4200.00,1120,70,Sunny
+2024-01-03,C003,Holiday Clearance,Midwest,Retail,85000,2550,127,1275.00,3187.50,850,22,Snowy
+2024-01-03,C004,Tech Deals,West,Electronics,145000,4350,217,2175.00,5437.50,1450,52,Cloudy
+2024-01-04,C001,Winter Sale,Northeast,Retail,128000,3840,192,1920.00,4800.00,1280,38,Cloudy
+2024-01-04,C002,New Year Promo,Southeast,Food & Beverage,95000,2850,142,1425.00,3562.50,950,72,Sunny
+2024-01-04,C003,Holiday Clearance,Midwest,Retail,92000,2760,138,1380.00,3450.00,920,30,Cloudy
+2024-01-04,C004,Tech Deals,West,Electronics,172000,5160,258,2580.00,6450.00,1720,60,Sunny
+2024-01-05,C001,Winter Sale,Northeast,Retail,135000,4050,202,2025.00,5062.50,1350,40,Sunny
+2024-01-05,C002,New Year Promo,Southeast,Food & Beverage,108000,3240,162,1620.00,4050.00,1080,75,Sunny
+2024-01-05,C003,Holiday Clearance,Midwest,Retail,88000,2640,132,1320.00,3300.00,880,32,Cloudy
+2024-01-05,C004,Tech Deals,West,Electronics,165000,4950,247,2475.00,6187.50,1650,62,Sunny
+2024-01-06,C001,Winter Sale,Northeast,Retail,142000,4260,213,2130.00,5325.00,1420,42,Sunny
+2024-01-06,C002,New Year Promo,Southeast,Food & Beverage,115000,3450,172,1725.00,4312.50,1150,78,Sunny
+2024-01-06,C003,Holiday Clearance,Midwest,Retail,95000,2850,142,1425.00,3562.50,950,35,Sunny
+2024-01-06,C004,Tech Deals,West,Electronics,178000,5340,267,2670.00,6675.00,1780,65,Sunny
+2024-01-07,C001,Winter Sale,Northeast,Retail,138000,4140,207,2070.00,5175.00,1380,38,Cloudy
+2024-01-07,C002,New Year Promo,Southeast,Food & Beverage,102000,3060,153,1530.00,3825.00,1020,70,Rainy
+2024-01-07,C003,Holiday Clearance,Midwest,Retail,82000,2460,123,1230.00,3075.00,820,28,Snowy
+2024-01-07,C004,Tech Deals,West,Electronics,160000,4800,240,2400.00,6000.00,1600,58,Cloudy
+2024-01-08,C001,Winter Sale,Northeast,Retail,145000,4350,217,2175.00,5437.50,1450,45,Sunny
+2024-01-08,C002,New Year Promo,Southeast,Food & Beverage,118000,3540,177,1770.00,4425.00,1180,80,Sunny
+2024-01-08,C003,Holiday Clearance,Midwest,Retail,98000,2940,147,1470.00,3675.00,980,38,Sunny
+2024-01-08,C004,Tech Deals,West,Electronics,185000,5550,277,2775.00,6937.50,1850,68,Sunny
+2024-01-09,C001,Winter Sale,Northeast,Retail,152000,4560,228,2280.00,5700.00,1520,48,Sunny
+2024-01-09,C002,New Year Promo,Southeast,Food & Beverage,125000,3750,187,1875.00,4687.50,1250,82,Sunny
+2024-01-09,C003,Holiday Clearance,Midwest,Retail,102000,3060,153,1530.00,3825.00,1020,42,Sunny
+2024-01-09,C004,Tech Deals,West,Electronics,192000,5760,288,2880.00,7200.00,1920,70,Sunny
+2024-01-10,C001,Winter Sale,Northeast,Retail,148000,4440,222,2220.00,5550.00,1480,44,Cloudy
+2024-01-10,C002,New Year Promo,Southeast,Food & Beverage,120000,3600,180,1800.00,4500.00,1200,78,Sunny
+2024-01-10,C003,Holiday Clearance,Midwest,Retail,96000,2880,144,1440.00,3600.00,960,36,Cloudy
+2024-01-10,C004,Tech Deals,West,Electronics,188000,5640,282,2820.00,7050.00,1880,66,Sunny
+2024-01-11,C001,Winter Sale,Northeast,Retail,155000,4650,232,2325.00,5812.50,1550,50,Sunny
+2024-01-11,C002,New Year Promo,Southeast,Food & Beverage,128000,3840,192,1920.00,4800.00,1280,85,Sunny
+2024-01-11,C003,Holiday Clearance,Midwest,Retail,105000,3150,157,1575.00,3937.50,1050,45,Sunny
+2024-01-11,C004,Tech Deals,West,Electronics,198000,5940,297,2970.00,7425.00,1980,72,Sunny
+2024-01-12,C001,Winter Sale,Northeast,Retail,162000,4860,243,2430.00,6075.00,1620,52,Sunny
+2024-01-12,C002,New Year Promo,Southeast,Food & Beverage,135000,4050,202,2025.00,5062.50,1350,88,Sunny
+2024-01-12,C003,Holiday Clearance,Midwest,Retail,110000,3300,165,1650.00,4125.00,1100,48,Sunny
+2024-01-12,C004,Tech Deals,West,Electronics,205000,6150,307,3075.00,7687.50,2050,75,Sunny
+2024-01-13,C001,Winter Sale,Northeast,Retail,158000,4740,237,2370.00,5925.00,1580,48,Cloudy
+2024-01-13,C002,New Year Promo,Southeast,Food & Beverage,130000,3900,195,1950.00,4875.00,1300,82,Sunny
+2024-01-13,C003,Holiday Clearance,Midwest,Retail,108000,3240,162,1620.00,4050.00,1080,42,Cloudy
+2024-01-13,C004,Tech Deals,West,Electronics,195000,5850,292,2925.00,7312.50,1950,70,Sunny
+2024-01-14,C001,Winter Sale,Northeast,Retail,165000,4950,247,2475.00,6187.50,1650,55,Sunny
+2024-01-14,C002,New Year Promo,Southeast,Food & Beverage,138000,4140,207,2070.00,5175.00,1380,85,Sunny
+2024-01-14,C003,Holiday Clearance,Midwest,Retail,115000,3450,172,1725.00,4312.50,1150,50,Sunny
+2024-01-14,C004,Tech Deals,West,Electronics,210000,6300,315,3150.00,7875.00,2100,78,Sunny
+

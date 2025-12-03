@@ -64,6 +64,21 @@ I built **TrendSpotter**, an automated insight engine that:
 
 ## 3. Demo & Expected Results
 
+### 🎨 Beautiful Web UI
+
+TrendSpotter includes a modern, animated web interface:
+
+![UI Screenshot](visual_outputs/ui_screenshot.png)
+
+**Features:**
+- 🎯 Drag & drop file upload
+- ⚡ Real-time progress tracking (6-step pipeline visualization)
+- 📊 Live console output
+- 🎉 One-click report download
+- 📋 Recent reports gallery
+
+**Access:** Simply visit `http://localhost:8000` after starting the server!
+
 ### Input
 ```
 POST /upload

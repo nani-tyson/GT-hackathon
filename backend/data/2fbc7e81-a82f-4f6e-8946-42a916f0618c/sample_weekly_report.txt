@@ -1,0 +1,74 @@
+Weekly Performance Summary Report
+Date: January 8-14, 2024
+Region: Northeast & Southeast
+
+EXECUTIVE OVERVIEW
+==================
+
+This week showed strong performance across our digital advertising campaigns. 
+The Winter Sale campaign in the Northeast region exceeded expectations with 
+over 1.2 million impressions and a CTR of 3.2%.
+
+KEY METRICS SUMMARY
+===================
+
+Total Impressions: 4,567,000
+Total Clicks: 142,500
+Overall CTR: 3.12%
+Total Spend: $45,750.00
+Total Revenue: $128,500.00
+ROAS: 2.81x
+
+Conversions: 8,450
+Conversion Rate: 5.93%
+Cost Per Acquisition: $5.41
+
+CAMPAIGN PERFORMANCE
+====================
+
+1. Winter Sale Campaign (Northeast)
+   - Impressions: 1,250,000
+   - Clicks: 40,000
+   - CTR: 3.2%
+   - Revenue: $52,000
+
+2. New Year Promo (Southeast)
+   - Impressions: 980,000
+   - Clicks: 31,360
+   - CTR: 3.2%
+   - Revenue: $38,500
+
+3. Tech Deals Campaign (West)
+   - Impressions: 1,450,000
+   - Clicks: 43,500
+   - CTR: 3.0%
+   - Revenue: $48,000
+
+FOOT TRAFFIC INSIGHTS
+=====================
+
+Store visits increased by 15% compared to the previous week.
+The Times Square location saw the highest foot traffic with 
+approximately 12,500 unique visitors.
+
+Weather correlation: Sunny days showed 22% higher foot traffic
+compared to rainy/snowy days.
+
+ISSUES IDENTIFIED
+=================
+
+- Mobile conversion rate dropped 8% on iOS devices
+- Weekend performance lagged behind weekdays by 12%
+- Chicago Downtown location underperformed targets by 15%
+
+RECOMMENDATIONS
+===============
+
+1. Increase mobile bid adjustments for iOS by 10%
+2. Implement weekend-specific creative variations
+3. Review Chicago location targeting and creative strategy
+4. Consider weather-based bid modifiers for outdoor campaigns
+
+Prepared by: Analytics Team
+Next Review: January 21, 2024
+

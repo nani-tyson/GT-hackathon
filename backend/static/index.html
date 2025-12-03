@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrendSpotter | Automated Insight Engine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a25;
+            --accent-cyan: #00d4ff;
+            --accent-purple: #7c3aed;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-pink: #ec4899;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --border-color: #27272a;
+            --gradient-1: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);
+            --gradient-2: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Main content */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .main-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            animation: fadeInUp 0.8s ease;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(0, 212, 255, 0.3);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.1);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .card-icon.upload { background: rgba(0, 212, 255, 0.15); }
+        .card-icon.generate { background: rgba(124, 58, 237, 0.15); }
+        .card-icon.status { background: rgba(16, 185, 129, 0.15); }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        /* Upload zone */
+        .upload-zone {
+            border: 2px dashed var(--border-color);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .upload-zone.dragover::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 212, 255, 0.1);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .upload-text {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-formats {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            background: rgba(0, 212, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        /* File list */
+        .file-list {
+            margin-top: 1.5rem;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .file-icon {
+            font-size: 1.5rem;
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .file-size {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .file-remove {
+            background: rgba(239, 68, 68, 0.2);
+            border: none;
+            color: #ef4444;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .file-remove:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-purple);
+            background: rgba(124, 58, 237, 0.1);
+        }
+
+        /* Form elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .form-select, .form-input {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-select:focus, .form-input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+        }
+
+        /* Status section */
+        .status-container {
+            grid-column: 1 / -1;
+        }
+
+        .status-box {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            display: none;
+        }
+
+        .status-box.active {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .status-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: blink 1s infinite;
+        }
+
+        .status-indicator.processing { background: var(--accent-orange); }
+        .status-indicator.completed { background: var(--accent-green); animation: none; }
+        .status-indicator.error { background: #ef4444; animation: none; }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Progress steps */
+        .progress-steps {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .step.active {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--accent-cyan);
+        }
+
+        .step.completed {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--accent-green);
+        }
+
+        .step-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-name {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Download section */
+        .download-section {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--accent-green);
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .download-section h3 {
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+
+        .btn-download {
+            background: var(--accent-green);
+            color: white;
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-download:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        /* Console log */
+        .console {
+            background: #0d0d0d;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .console-line {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #1a1a1a;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .console-time {
+            color: var(--text-secondary);
+        }
+
+        .console-msg {
+            color: var(--accent-cyan);
+        }
+
+        .console-msg.success { color: var(--accent-green); }
+        .console-msg.error { color: #ef4444; }
+        .console-msg.warning { color: var(--accent-orange); }
+
+        /* Reports list */
+        .reports-section {
+            grid-column: 1 / -1;
+            margin-top: 1rem;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .report-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .report-card:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-4px);
+        }
+
+        .report-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .report-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .report-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--bg-card);
+            border-top-color: var(--accent-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1000;
+            animation: slideInRight 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .toast.success { border-color: var(--accent-green); }
+        .toast.error { border-color: #ef4444; }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <div class="grid-overlay"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">📊</div>
+                <div>
+                    <h1>TrendSpotter</h1>
+                    <p class="tagline">Automated Insight Engine</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-grid">
+            <!-- Upload Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon upload">📁</div>
+                    <h2 class="card-title">Upload Data</h2>
+                </div>
+
+                <div class="upload-zone" id="upload-zone">
+                    <div class="upload-icon">⬆️</div>
+                    <p class="upload-text">Drag & drop your files here</p>
+                    <p class="upload-text">or click to browse</p>
+                    <span class="upload-formats">CSV • JSON • TXT • PDF • MD</span>
+                    <input type="file" id="file-input" multiple accept=".csv,.json,.txt,.pdf,.md">
+                </div>
+
+                <div class="file-list" id="file-list"></div>
+
+                <button type="button" class="btn btn-primary" id="upload-btn" disabled>
+                    <span>🚀</span> Upload Files
+                </button>
+            </div>
+
+            <!-- Generate Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon generate">⚡</div>
+                    <h2 class="card-title">Generate Report</h2>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Upload ID</label>
+                    <input type="text" class="form-input" id="upload-id" placeholder="Will be filled after upload..." readonly>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Report Title</label>
+                    <input type="text" class="form-input" id="report-title" value="Performance Report" placeholder="Enter report title...">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Report Format</label>
+                    <select class="form-select" id="report-format">
+                        <option value="pdf">📄 PDF Report</option>
+                        <option value="pptx">📊 PowerPoint (PPTX)</option>
+                    </select>
+                </div>
+
+                <button type="button" class="btn btn-primary" id="generate-btn" disabled>
+                    <span>✨</span> Generate Report
+                </button>
+            </div>
+
+            <!-- Status Section -->
+            <div class="status-container">
+                <div class="status-box" id="status-box">
+                    <div class="status-header">
+                        <div class="status-indicator" id="status-indicator"></div>
+                        <h3 id="status-text">Processing...</h3>
+                    </div>
+
+                    <div class="progress-steps" id="progress-steps">
+                        <div class="step" data-step="ingest">
+                            <div class="step-icon">📥</div>
+                            <div class="step-name">Ingest</div>
+                        </div>
+                        <div class="step" data-step="transform">
+                            <div class="step-icon">🔄</div>
+                            <div class="step-name">Transform</div>
+                        </div>
+                        <div class="step" data-step="kpis">
+                            <div class="step-icon">📈</div>
+                            <div class="step-name">KPIs</div>
+                        </div>
+                        <div class="step" data-step="charts">
+                            <div class="step-icon">📊</div>
+                            <div class="step-name">Charts</div>
+                        </div>
+                        <div class="step" data-step="insights">
+                            <div class="step-icon">🤖</div>
+                            <div class="step-name">AI Insights</div>
+                        </div>
+                        <div class="step" data-step="report">
+                            <div class="step-icon">📄</div>
+                            <div class="step-name">Report</div>
+                        </div>
+                    </div>
+
+                    <div class="console" id="console"></div>
+
+                    <div class="download-section" id="download-section" style="display: none;">
+                        <h3>🎉 Report Ready!</h3>
+                        <p style="margin-bottom: 1rem; color: var(--text-secondary);">Your report has been generated successfully</p>
+                        <button type="button" class="btn btn-download" id="download-btn">
+                            <span>⬇️</span> Download Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Reports -->
+            <div class="reports-section card">
+                <div class="card-header">
+                    <div class="card-icon status">📋</div>
+                    <h2 class="card-title">Recent Reports</h2>
+                </div>
+                <div class="reports-grid" id="reports-grid">
+                    <p style="color: var(--text-secondary); grid-column: 1/-1;">No reports yet. Generate your first report!</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            Built with ❤️ for the <a href="#">GroundTruth Mini AI Hackathon</a> | 
+            <a href="http://localhost:8000/docs" target="_blank">API Docs</a>
+        </footer>
+    </div>
+
+    <script>
+        /* ===== CONFIG ===== */
+        const API_BASE = 'http://localhost:8000';
+
+        /* ===== STATE & ELEMENTS ===== */
+        let selectedFiles = [];
+        let currentUploadId = null;
+        let currentReportId = null;
+        let pollingInterval = null;
+
+        const uploadZone = document.getElementById('upload-zone');
+        const fileInput = document.getElementById('file-input');
+        const fileList = document.getElementById('file-list');
+        const uploadBtn = document.getElementById('upload-btn');
+        const uploadIdInput = document.getElementById('upload-id');
+        const generateBtn = document.getElementById('generate-btn');
+        const statusBox = document.getElementById('status-box');
+        const statusIndicator = document.getElementById('status-indicator');
+        const statusText = document.getElementById('status-text');
+        const consoleEl = document.getElementById('console');
+        const downloadSection = document.getElementById('download-section');
+        const downloadBtn = document.getElementById('download-btn');
+        const reportsGrid = document.getElementById('reports-grid');
+
+        const fileIcons = { 'csv': '📊', 'json': '📋', 'txt': '📝', 'pdf': '📄', 'md': '📑' };
+
+        /* ===== GLOBAL DEFENSIVE HANDLERS ===== */
+        /* Prevent ANY page refresh/navigation */
+        window.addEventListener('beforeunload', (e) => {
+            // Only warn if there's an upload in progress
+            if (uploadBtn.innerHTML.includes('Uploading') || generateBtn.innerHTML.includes('Generating')) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+        
+        /* Prevent the browser from navigating to files dropped anywhere on the window */
+        window.addEventListener('dragover', (e) => { e.preventDefault(); e.stopPropagation(); });
+        window.addEventListener('drop', (e) => { e.preventDefault(); e.stopPropagation(); });
+        
+        /* Prevent any form submission globally */
+        document.addEventListener('submit', (e) => { e.preventDefault(); e.stopPropagation(); return false; }, true);
+
+        /* Prevent accidental form submits if any form exists */
+        document.querySelectorAll('form').forEach(f => {
+            f.addEventListener('submit', (e) => { e.preventDefault(); e.stopPropagation(); });
+        });
+
+        /* ===== UPLOAD ZONE HANDLERS ===== */
+        uploadZone.addEventListener('click', function(e) {
+            // full defensive prevention
+            if (e) { try { e.preventDefault(); e.stopPropagation(); } catch(_){} }
+            if (e.target === fileInput || e.target.closest('.file-remove')) return;
+            // Use try/catch in case browser blocks programmatic click
+            try { fileInput.click(); } catch (err) { console.warn('fileInput.click blocked', err); }
+        });
+
+        uploadZone.addEventListener('dragover', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            uploadZone.classList.add('dragover');
+        });
+
+        uploadZone.addEventListener('dragleave', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            uploadZone.classList.remove('dragover');
+        });
+
+        uploadZone.addEventListener('drop', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            uploadZone.classList.remove('dragover');
+            if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
+                handleFiles(e.dataTransfer.files);
+            }
+        });
+
+        /* Prevent file input click from bubbling up */
+        fileInput.addEventListener('click', function(e) { e.stopPropagation(); });
+
+        /* file change – heavy defensive handling */
+        fileInput.addEventListener('change', function(e) {
+            try { e.preventDefault?.(); e.stopPropagation?.(); } catch (err) {}
+            if (e.target && e.target.files && e.target.files.length > 0) {
+                handleFiles(e.target.files);
+                // Reset input so selecting the same file again still triggers change
+                try { fileInput.value = ''; } catch(_) {}
+            }
+        });
+
+        /* ===== FILE LIST HELPERS ===== */
+        function handleFiles(files) {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const ext = (file.name.split('.').pop() || '').toLowerCase();
+                if (['csv','json','txt','pdf','md'].includes(ext)) {
+                    selectedFiles.push(file);
+                } else {
+                    logToConsole(`Skipped unsupported file: ${file.name}`, 'warning');
+                }
+            }
+            renderFileList();
+            uploadBtn.disabled = selectedFiles.length === 0;
+        }
+
+        function renderFileList() {
+            if (!selectedFiles.length) { fileList.innerHTML = ''; return; }
+            fileList.innerHTML = selectedFiles.map((file, i) => {
+                const ext = (file.name.split('.').pop() || '').toLowerCase();
+                const icon = fileIcons[ext] || '📄';
+                const size = formatFileSize(file.size);
+                return `
+                    <div class="file-item" data-index="${i}">
+                        <span class="file-icon">${icon}</span>
+                        <div class="file-info">
+                            <div class="file-name">${escapeHtml(file.name)}</div>
+                            <div class="file-size">${size}</div>
+                        </div>
+                        <button class="file-remove" type="button" onclick="removeFile(${i})">×</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // safe remove
+        window.removeFile = function(index) {
+            if (typeof index !== 'number') return;
+            if (index >= 0 && index < selectedFiles.length) {
+                selectedFiles.splice(index, 1);
+                renderFileList();
+                uploadBtn.disabled = selectedFiles.length === 0;
+            }
+        };
+
+        function formatFileSize(bytes) {
+            if (!bytes || bytes < 1024) return bytes + ' B';
+            if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+            return (bytes/(1024*1024)).toFixed(1) + ' MB';
+        }
+
+        /* ===== UPLOAD TO BACKEND ===== */
+        uploadBtn.onclick = function(e) {
+            // STOP EVERYTHING
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (selectedFiles.length === 0) return false;
+
+            uploadBtn.disabled = true;
+            uploadBtn.innerHTML = '<span class="spinner" style="width:20px;height:20px;border-width:2px;"></span> Uploading...';
+
+            const formData = new FormData();
+            selectedFiles.forEach(file => formData.append('files', file));
+
+            // Use XMLHttpRequest for maximum control
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', `${API_BASE}/upload`, true);
+            
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    try {
+                        const data = JSON.parse(xhr.responseText);
+                        if (data.status === 'success') {
+                            currentUploadId = data.upload_id;
+                            uploadIdInput.value = currentUploadId;
+                            generateBtn.disabled = false;
+                            showToast('Files uploaded successfully!', 'success');
+                            logToConsole('Upload complete: ' + (data.message || 'OK'), 'success');
+                            logToConsole('Upload ID: ' + currentUploadId, 'success');
+                            selectedFiles = [];
+                            renderFileList();
+                        } else {
+                            throw new Error(data.detail || 'Upload failed');
+                        }
+                    } catch (err) {
+                        showToast('Upload failed: ' + err.message, 'error');
+                        logToConsole('Error: ' + err.message, 'error');
+                    }
+                } else {
+                    showToast('Upload failed: Server error ' + xhr.status, 'error');
+                    logToConsole('Error: Server returned ' + xhr.status, 'error');
+                }
+                uploadBtn.innerHTML = '<span>🚀</span> Upload Files';
+                uploadBtn.disabled = selectedFiles.length === 0;
+            };
+            
+            xhr.onerror = function() {
+                showToast('Upload failed: Network error', 'error');
+                logToConsole('Error: Network error', 'error');
+                uploadBtn.innerHTML = '<span>🚀</span> Upload Files';
+                uploadBtn.disabled = selectedFiles.length === 0;
+            };
+            
+            xhr.send(formData);
+            return false;
+        };
+
+        /* ===== GENERATE REPORT ===== */
+        generateBtn.addEventListener('click', async (e) => {
+            try { e.preventDefault(); e.stopPropagation(); } catch(_) {}
+            const uploadId = uploadIdInput.value;
+            const format = document.getElementById('report-format').value;
+            const title = document.getElementById('report-title').value || 'Performance Report';
+
+            if (!uploadId) { showToast('Please upload files first', 'error'); return; }
+
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = '<span class="spinner" style="width:20px;height:20px;border-width:2px;"></span> Generating...';
+
+            statusBox.classList.add('active');
+            statusIndicator.className = 'status-indicator processing';
+            statusText.textContent = 'Processing...';
+            downloadSection.style.display = 'none';
+            consoleEl.innerHTML = '';
+            resetSteps();
+
+            try {
+                const res = await fetch(`${API_BASE}/generate-report?upload_id=${encodeURIComponent(uploadId)}&report_format=${encodeURIComponent(format)}&report_title=${encodeURIComponent(title)}`, { method: 'POST' });
+                if (!res.ok) throw new Error(`Generate API returned ${res.status}`);
+                const data = await res.json();
+
+                if (data.report_id) {
+                    currentReportId = data.report_id;
+                    logToConsole('Report generation started: ' + currentReportId);
+                    startPolling();
+                } else {
+                    throw new Error(data.detail || 'Generation failed');
+                }
+            } catch (error) {
+                statusIndicator.className = 'status-indicator error';
+                statusText.textContent = 'Error';
+                showToast('Generation failed: ' + (error.message || error), 'error');
+                logToConsole('Error: ' + (error.message || error), 'error');
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = '<span>✨</span> Generate Report';
+            }
+        });
+
+        /* ===== POLLING ===== */
+        function startPolling() {
+            if (pollingInterval) clearInterval(pollingInterval);
+            pollingInterval = setInterval(async () => {
+                try {
+                    const res = await fetch(`${API_BASE}/status/${encodeURIComponent(currentReportId)}`);
+                    if (!res.ok) throw new Error(`Status API ${res.status}`);
+                    const data = await res.json();
+
+                    updateSteps(data.status);
+                    logToConsole(`Status: ${data.status}`);
+
+                    if (data.status === 'completed') {
+                        clearInterval(pollingInterval);
+                        statusIndicator.className = 'status-indicator completed';
+                        statusText.textContent = 'Completed!';
+                        downloadSection.style.display = 'block';
+                        completeAllSteps();
+                        showToast('Report generated successfully!', 'success');
+                        logToConsole('Report ready for download', 'success');
+                        generateBtn.disabled = false;
+                        generateBtn.innerHTML = '<span>✨</span> Generate Report';
+                        loadReports();
+                    } else if (data.status === 'error') {
+                        clearInterval(pollingInterval);
+                        statusIndicator.className = 'status-indicator error';
+                        statusText.textContent = 'Error';
+                        showToast('Report generation failed', 'error');
+                        logToConsole('Pipeline error: ' + (data.error || 'Unknown error'), 'error');
+                        generateBtn.disabled = false;
+                        generateBtn.innerHTML = '<span>✨</span> Generate Report';
+                    }
+                } catch (err) {
+                    logToConsole('Polling error: ' + (err.message || err), 'warning');
+                }
+            }, 1000);
+        }
+
+        /* ===== UI HELPERS ===== */
+        function updateSteps(status) {
+            const stepMap = {
+                'processing': 0,
+                'ingesting': 0,
+                'transforming': 1,
+                'computing_kpis': 2,
+                'generating_charts': 3,
+                'generating_insights': 4,
+                'generating_report': 5
+            };
+            const currentIndex = stepMap[status] ?? 0;
+
+            document.querySelectorAll('.step').forEach((step, i) => {
+                step.classList.remove('active', 'completed');
+                if (i < currentIndex) step.classList.add('completed');
+                else if (i === currentIndex) step.classList.add('active');
+            });
+        }
+
+        function resetSteps() { 
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active','completed')); 
+        }
+
+        function completeAllSteps() { 
+            document.querySelectorAll('.step').forEach(s => { 
+                s.classList.remove('active'); 
+                s.classList.add('completed'); 
+            }); 
+        }
+
+        /* ===== DOWNLOAD ===== */
+        downloadBtn.addEventListener('click', (e) => {
+            try { e.preventDefault(); e.stopPropagation(); } catch(_) {}
+            if (currentReportId) window.open(`${API_BASE}/download/${encodeURIComponent(currentReportId)}`, '_blank');
+        });
+
+        /* ===== LOG & TOAST HELPERS ===== */
+        function logToConsole(message, type='') {
+            const time = new Date().toLocaleTimeString();
+            const line = document.createElement('div');
+            line.className = 'console-line';
+            line.innerHTML = `<span class="console-time">${time}</span><span class="console-msg ${type}">${escapeHtml(String(message))}</span>`;
+            consoleEl.appendChild(line);
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        }
+
+        function showToast(message, type='') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span><span>${escapeHtml(String(message))}</span>`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        /* ===== LOAD REPORTS ===== */
+        async function loadReports() {
+            try {
+                const res = await fetch(`${API_BASE}/reports`, { method: 'GET', headers: { 'Accept': 'application/json' } });
+                if (!res.ok) return;
+                const data = await res.json();
+
+                if (data.reports && data.reports.length > 0) {
+                    reportsGrid.innerHTML = data.reports.slice(0,6).map(report => `
+                        <div class="report-card" onclick="event.preventDefault(); window.open('${API_BASE}/download/${report.report_id}', '_blank')">
+                            <div class="report-icon">${report.format === 'pdf' ? '📄' : '📊'}</div>
+                            <div class="report-title">${escapeHtml(report.title || 'Report')}</div>
+                            <div class="report-meta">${escapeHtml((report.format || '').toUpperCase())} • ${escapeHtml(report.status || '')}</div>
+                        </div>
+                    `).join('');
+                }
+            } catch (err) {
+                console.warn('Could not load reports', err);
+            }
+        }
+
+        /* ===== UTIL ===== */
+        function escapeHtml(str) {
+            return str.replace(/[&<>"'`=\/]/g, function(s){ 
+                return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','/':'&#47;','`':'&#96;','=':'&#61;'})[s]; 
+            });
+        }
+
+        /* ===== INIT ===== */
+        console.log('🚀 TrendSpotter initialized at', new Date().toISOString());
+        console.log('Page loaded - if you see this message repeatedly, the page is refreshing!');
+        loadReports();
+    </script>
+</body>
+</html>
+

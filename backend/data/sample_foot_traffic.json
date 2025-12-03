@@ -1,0 +1,165 @@
+{
+  "data": [
+    {
+      "date": "2024-01-01",
+      "location_id": "L001",
+      "location_name": "Times Square Store",
+      "region": "Northeast",
+      "unique_visitors": 4500,
+      "visits": 6750,
+      "avg_dwell_time_minutes": 12.5,
+      "conversion_rate": 3.2
+    },
+    {
+      "date": "2024-01-01",
+      "location_id": "L002",
+      "location_name": "Miami Beach Mall",
+      "region": "Southeast",
+      "unique_visitors": 3800,
+      "visits": 5320,
+      "avg_dwell_time_minutes": 15.8,
+      "conversion_rate": 4.1
+    },
+    {
+      "date": "2024-01-01",
+      "location_id": "L003",
+      "location_name": "Chicago Downtown",
+      "region": "Midwest",
+      "unique_visitors": 3200,
+      "visits": 4480,
+      "avg_dwell_time_minutes": 10.2,
+      "conversion_rate": 2.8
+    },
+    {
+      "date": "2024-01-01",
+      "location_id": "L004",
+      "location_name": "LA Tech Hub",
+      "region": "West",
+      "unique_visitors": 5200,
+      "visits": 7800,
+      "avg_dwell_time_minutes": 18.5,
+      "conversion_rate": 5.2
+    },
+    {
+      "date": "2024-01-02",
+      "location_id": "L001",
+      "location_name": "Times Square Store",
+      "region": "Northeast",
+      "unique_visitors": 4800,
+      "visits": 7200,
+      "avg_dwell_time_minutes": 13.2,
+      "conversion_rate": 3.5
+    },
+    {
+      "date": "2024-01-02",
+      "location_id": "L002",
+      "location_name": "Miami Beach Mall",
+      "region": "Southeast",
+      "unique_visitors": 4100,
+      "visits": 5740,
+      "avg_dwell_time_minutes": 16.5,
+      "conversion_rate": 4.4
+    },
+    {
+      "date": "2024-01-02",
+      "location_id": "L003",
+      "location_name": "Chicago Downtown",
+      "region": "Midwest",
+      "unique_visitors": 3400,
+      "visits": 4760,
+      "avg_dwell_time_minutes": 11.0,
+      "conversion_rate": 3.0
+    },
+    {
+      "date": "2024-01-02",
+      "location_id": "L004",
+      "location_name": "LA Tech Hub",
+      "region": "West",
+      "unique_visitors": 5500,
+      "visits": 8250,
+      "avg_dwell_time_minutes": 19.2,
+      "conversion_rate": 5.5
+    },
+    {
+      "date": "2024-01-03",
+      "location_id": "L001",
+      "location_name": "Times Square Store",
+      "region": "Northeast",
+      "unique_visitors": 4200,
+      "visits": 6300,
+      "avg_dwell_time_minutes": 11.8,
+      "conversion_rate": 3.0
+    },
+    {
+      "date": "2024-01-03",
+      "location_id": "L002",
+      "location_name": "Miami Beach Mall",
+      "region": "Southeast",
+      "unique_visitors": 4300,
+      "visits": 6020,
+      "avg_dwell_time_minutes": 17.2,
+      "conversion_rate": 4.6
+    },
+    {
+      "date": "2024-01-03",
+      "location_id": "L003",
+      "location_name": "Chicago Downtown",
+      "region": "Midwest",
+      "unique_visitors": 2900,
+      "visits": 4060,
+      "avg_dwell_time_minutes": 9.5,
+      "conversion_rate": 2.5
+    },
+    {
+      "date": "2024-01-03",
+      "location_id": "L004",
+      "location_name": "LA Tech Hub",
+      "region": "West",
+      "unique_visitors": 5000,
+      "visits": 7500,
+      "avg_dwell_time_minutes": 17.8,
+      "conversion_rate": 5.0
+    },
+    {
+      "date": "2024-01-04",
+      "location_id": "L001",
+      "location_name": "Times Square Store",
+      "region": "Northeast",
+      "unique_visitors": 4600,
+      "visits": 6900,
+      "avg_dwell_time_minutes": 12.8,
+      "conversion_rate": 3.3
+    },
+    {
+      "date": "2024-01-04",
+      "location_id": "L002",
+      "location_name": "Miami Beach Mall",
+      "region": "Southeast",
+      "unique_visitors": 3900,
+      "visits": 5460,
+      "avg_dwell_time_minutes": 15.5,
+      "conversion_rate": 4.0
+    },
+    {
+      "date": "2024-01-04",
+      "location_id": "L003",
+      "location_name": "Chicago Downtown",
+      "region": "Midwest",
+      "unique_visitors": 3500,
+      "visits": 4900,
+      "avg_dwell_time_minutes": 10.8,
+      "conversion_rate": 2.9
+    },
+    {
+      "date": "2024-01-04",
+      "location_id": "L004",
+      "location_name": "LA Tech Hub",
+      "region": "West",
+      "unique_visitors": 5800,
+      "visits": 8700,
+      "avg_dwell_time_minutes": 20.0,
+      "conversion_rate": 5.8
+    }
+  ]
+}
+

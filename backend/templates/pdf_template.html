@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ report_title }}</title>
+    <style>
+        :root {
+            --brand-primary: #2563EB;
+            --brand-secondary: #10B981;
+            --brand-dark: #1E293B;
+            --brand-light: #F1F5F9;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--brand-dark);
+            background: white;
+        }
+        
+        .page {
+            width: 8.5in;
+            min-height: 11in;
+            padding: 0.75in;
+            margin: 0 auto;
+            background: white;
+        }
+        
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 11in;
+            background: linear-gradient(135deg, var(--brand-primary) 0%, #1E40AF 100%);
+            color: white;
+        }
+        
+        .cover-page h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cover-page .subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+        }
+        
+        .cover-page .date {
+            margin-top: 2rem;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .cover-page .report-id {
+            margin-top: 4rem;
+            font-size: 0.75rem;
+            opacity: 0.6;
+        }
+        
+        h1 {
+            color: var(--brand-primary);
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--brand-primary);
+            padding-bottom: 0.5rem;
+        }
+        
+        h2 {
+            color: var(--brand-dark);
+            font-size: 1.25rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .kpi-card {
+            background: var(--brand-light);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            border-left: 4px solid var(--brand-primary);
+        }
+        
+        .kpi-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--brand-primary);
+        }
+        
+        .kpi-label {
+            font-size: 0.875rem;
+            color: #64748B;
+            margin-top: 0.25rem;
+        }
+        
+        ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight-list li::marker {
+            color: var(--brand-secondary);
+        }
+        
+        .issue-list li::marker {
+            color: #EF4444;
+        }
+        
+        .recommendation-list {
+            list-style-type: decimal;
+        }
+        
+        .chart-container {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .chart-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .chart-title {
+            font-size: 1rem;
+            color: var(--brand-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        th {
+            background: var(--brand-primary);
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        
+        tr:nth-child(even) {
+            background: var(--brand-light);
+        }
+        
+        .page-break {
+            page-break-after: always;
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 0.5in;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #64748B;
+        }
+        
+        @media print {
+            .page {
+                margin: 0;
+                padding: 0.5in;
+            }
+            
+            .page-break {
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cover Page -->
+    <div class="page cover-page">
+        <h1>{{ report_title }}</h1>
+        <div class="subtitle">Automated Insight Engine Report</div>
+        <div class="date">Generated on {{ generation_date }}</div>
+        <div class="report-id">Report ID: {{ report_id }}</div>
+    </div>
+    
+    <!-- Executive Summary -->
+    <div class="page">
+        <h1>Executive Summary</h1>
+        <p>{{ executive_summary }}</p>
+        
+        <h1>Key Performance Indicators</h1>
+        <div class="kpi-grid">
+            {% for kpi in kpis %}
+            <div class="kpi-card">
+                <div class="kpi-value">{{ kpi.value }}</div>
+                <div class="kpi-label">{{ kpi.label }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Highlights & Issues -->
+    <div class="page">
+        <h1>Key Highlights</h1>
+        <ul class="highlight-list">
+            {% for highlight in highlights %}
+            <li>{{ highlight }}</li>
+            {% endfor %}
+        </ul>
+        
+        <h1>Performance Issues</h1>
+        <ul class="issue-list">
+            {% for issue in issues %}
+            <li>{{ issue }}</li>
+            {% endfor %}
+        </ul>
+        
+        <h1>Recommendations</h1>
+        <ol class="recommendation-list">
+            {% for recommendation in recommendations %}
+            <li>{{ recommendation }}</li>
+            {% endfor %}
+        </ol>
+    </div>
+    
+    <!-- Charts -->
+    {% for chart in charts %}
+    <div class="page">
+        <h1>{{ chart.title }}</h1>
+        <div class="chart-container">
+            <img src="{{ chart.path }}" alt="{{ chart.title }}">
+        </div>
+    </div>
+    {% endfor %}
+    
+    <!-- Data Summary -->
+    <div class="page">
+        <h1>Data Summary</h1>
+        <table>
+            <tr>
+                <th>Metric</th>
+                <th>Value</th>
+            </tr>
+            {% for item in data_summary %}
+            <tr>
+                <td>{{ item.label }}</td>
+                <td>{{ item.value }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
+
